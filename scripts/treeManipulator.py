@@ -8,6 +8,7 @@ import argparse
 from itertools import izip_longest
 from random import sample
 import dendropy
+from security import safe_command
 
 #for dendropy 4 compatability
 try:
@@ -164,7 +165,7 @@ if len(sys.argv) == 1:
     if 'darwin' in sys.platform.lower():
         try:
             #this can give odd non-critical error messages from the OS, so send stderr to devnull
-            retcode = subprocess.call(shlex.split('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' '''), stderr=open(os.devnull, 'wb'))
+            retcode = safe_command.run(subprocess.call, shlex.split('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' '''), stderr=open(os.devnull, 'wb'))
         except:
             #didn't manage to get window to front, but don't worry about it
             pass
