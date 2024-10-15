@@ -6,8 +6,8 @@ import shlex
 import subprocess
 import argparse
 from itertools import izip_longest
-from random import sample
 import dendropy
+import secrets
 
 #for dendropy 4 compatability
 try:
@@ -401,7 +401,7 @@ if outtrees:
         outtrees[options.max_trees:] = []
 
     if options.subsample:
-        outtrees = dendropy.TreeList(sample(outtrees, options.subsample))
+        outtrees = dendropy.TreeList(secrets.SystemRandom().sample(outtrees, options.subsample))
         
     if options.collapse_edges:
         log.write('collaping edges with length <= %g\n' % options.collapse_edges)
