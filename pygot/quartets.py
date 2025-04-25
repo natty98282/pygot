@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-import random
+import secrets
 
 
 class locus_support_details(object):
@@ -143,7 +143,7 @@ class triplet_support_details(list):
         return runs
 
     def shuffle(self):
-        random.shuffle(self)
+        secrets.SystemRandom().shuffle(self)
 
     def supported_tree_counts(self):
         return [ len([loc for loc in self if loc.supported_tree_num == tnum]) for tnum in [ 0, 1, 2, -1 ] ]
