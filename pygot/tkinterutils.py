@@ -11,6 +11,7 @@ import shlex
 import subprocess
 from plotutils import ArgparseActionAppendToDefault
 from pygot.utils import proportion_type, argparse_bounded_float
+from security import safe_command
 
 '''
 ***For reference, here is the help on the attributes of the argparse.Action baseclass***
@@ -489,7 +490,7 @@ class ArgparseGui(object):
         if 'darwin' in sys.platform.lower():
             try:
                 #this can give odd non-critical error messages from the OS, so send stderr to devnull
-                retcode = subprocess.call(shlex.split('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' '''), stderr=open(devnull, 'wb'))
+                retcode = safe_command.run(subprocess.call, shlex.split('''/usr/bin/osascript -e 'tell app "Finder" to set frontmost of process "Python" to true' '''), stderr=open(devnull, 'wb'))
             except:
                 #didn't manage to get window to front, but don't worry about it
                 pass
